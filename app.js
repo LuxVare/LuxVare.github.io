@@ -2,41 +2,18 @@ let tg = window.Telegram.WebApp;
 tg.expand();
 
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-let products = [];
+let products = [
+    {id: 1, name: "iPhone 15 Pro", description: "Флагман от Apple", price: 99990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=iPhone+15"},
+    {id: 2, name: "Samsung Galaxy S24", description: "Android смартфон", price: 79990, image_url: "https://via.placeholder.com/300x300/1428a0/ffffff?text=Galaxy+S24"},
+    {id: 3, name: "AirPods Pro 2", description: "Беспроводные наушники", price: 24990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=AirPods"},
+    {id: 4, name: "MacBook Air M3", description: "Ноутбук для работы", price: 129990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=MacBook"},
+    {id: 5, name: "Apple Watch Series 9", description: "Умные часы", price: 44990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=Watch"},
+    {id: 6, name: "iPad Pro 12.9", description: "Планшет с M2", price: 109990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=iPad"}
+];
 let discount = 0;
 
-// Получаем товары из initData бота
-async function loadProducts() {
-    try {
-        // Запрашиваем товары у бота
-        const response = await fetch('https://api.telegram.org/bot8261773916:AAEQ9buJUda5GUX8u_02vootzy5IyBqhR-0/sendMessage', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                chat_id: tg.initDataUnsafe.user.id,
-                text: '/get_products_webapp'
-            })
-        });
-        
-        // Временно используем тестовые товары
-        products = [
-            {id: 1, name: "iPhone 15 Pro", description: "Флагман от Apple", price: 99990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=iPhone+15"},
-            {id: 2, name: "Samsung Galaxy S24", description: "Android смартфон", price: 79990, image_url: "https://via.placeholder.com/300x300/1428a0/ffffff?text=Galaxy+S24"},
-            {id: 3, name: "AirPods Pro 2", description: "Беспроводные наушники", price: 24990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=AirPods"},
-            {id: 4, name: "MacBook Air M3", description: "Ноутбук для работы", price: 129990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=MacBook"},
-            {id: 5, name: "Apple Watch Series 9", description: "Умные часы", price: 44990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=Watch"},
-            {id: 6, name: "iPad Pro 12.9", description: "Планшет с M2", price: 109990, image_url: "https://via.placeholder.com/300x300/007aff/ffffff?text=iPad"}
-        ];
-        renderProducts();
-    } catch (error) {
-        console.error('Error loading products:', error);
-        // Используем тестовые товары при ошибке
-        products = [
-            {id: 1, name: "Товар 1", description: "Описание товара 1", price: 1000, image_url: "https://via.placeholder.com/300"},
-            {id: 2, name: "Товар 2", description: "Описание товара 2", price: 2000, image_url: "https://via.placeholder.com/300"}
-        ];
-        renderProducts();
-    }
+function loadProducts() {
+    renderProducts();
 }
 
 function renderProducts() {
@@ -158,11 +135,10 @@ function renderCart() {
     document.getElementById('final-total').textContent = total;
 }
 
-async function applyPromocode() {
+function applyPromocode() {
     const code = document.getElementById('promocode').value.trim().toUpperCase();
     if (!code) return;
     
-    // Проверяем промокоды локально
     const promocodes = {
         'WELCOME10': 10,
         'SALE20': 20,
