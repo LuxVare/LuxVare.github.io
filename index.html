@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxVar - Магазин</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>🛍 LuxVar</h1>
+            <div class="cart-icon" onclick="showCart()">
+                🛒 <span id="cart-count">0</span>
+            </div>
+        </header>
+
+        <div id="products-page" class="page active">
+            <div id="products-grid" class="products-grid"></div>
+        </div>
+
+        <div id="cart-page" class="page">
+            <button class="back-btn" onclick="showProducts()">← Назад к товарам</button>
+            <h2>Корзина</h2>
+            <div id="cart-items"></div>
+            <div id="cart-total"></div>
+            <button id="checkout-btn" class="btn-primary" onclick="showCheckout()">Оформить заказ</button>
+        </div>
+
+        <div id="checkout-page" class="page">
+            <button class="back-btn" onclick="showCart()">← Назад к корзине</button>
+            <h2>Оформление заказа</h2>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label>ФИО *</label>
+                    <input type="text" id="full_name" required>
+                </div>
+                <div class="form-group">
+                    <label>Телефон *</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label>Адрес *</label>
+                    <textarea id="address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Комментарий</label>
+                    <textarea id="comment"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Промокод</label>
+                    <input type="text" id="promocode">
+                    <button type="button" onclick="applyPromocode()">Применить</button>
+                </div>
+                <div class="form-group">
+                    <label>Способ оплаты *</label>
+                    <select id="payment_method" required>
+                        <option value="Наличные">Наличные</option>
+                        <option value="Карта">Карта</option>
+                        <option value="Онлайн">Онлайн</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Способ получения *</label>
+                    <select id="delivery_method" required>
+                        <option value="Доставка">Доставка</option>
+                        <option value="Самовывоз">Самовывоз</option>
+                    </select>
+                </div>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="call_before_delivery">
+                    <label for="call_before_delivery">Позвонить перед доставкой</label>
+                </div>
+                <div class="form-group">
+                    <label>Ваш @username</label>
+                    <input type="text" id="username">
+                </div>
+                <div class="order-summary">
+                    <h3>Итого: <span id="final-total">0</span>₽</h3>
+                </div>
+                <button type="submit" class="btn-primary">Подтвердить заказ</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
